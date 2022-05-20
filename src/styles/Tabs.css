@@ -1,0 +1,30 @@
+a {
+    text-decoration: none;
+}
+
+#tabHeads {
+    position: relative;
+    height: 40px;
+    background-color: #404040;
+}
+
+.tabHead {
+    display: inline-block;
+    line-height: 40px;
+    color: white;
+    cursor: pointer;
+}
+
+.tabHead {
+    margin-left: 20px;
+    color: #c0c0c0;
+}
+
+.tabHead.selected {
+    color: white;
+    border-bottom: 1px solid white;
+}
+
+#tabContents {
+    padding: 30px 20px;
+}

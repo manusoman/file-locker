@@ -1,0 +1,9 @@
+header {
+    padding: 16px;
+    text-align: center;    
+    background-color: #404040;
+}
+
+header > h2 {
+    color: white;
+}

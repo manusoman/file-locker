@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { createContext, useState } from 'react';
+import Header from './Header.js';
+import Tabs from './Tabs.js';
+import Footer from './Footer.js';
+import Message from './Message';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export const UserMsgContext = createContext();
+
+export default function App() {
+    const msgOffState = { className : 'off', mode : '', text : '' };
+    const [userMessage, setUserMessage] = useState(msgOffState);
+
+    const showUIMessage = (msg, isError) => {
+        setUserMessage({
+            className : '',
+            mode : isError ? 'error' : '',
+            text : msg
+        });
+
+        setTimeout(() => setUserMessage(msgOffState), 3000);
+    };
+
+    return (
+        <>
+        <Header />
+        <UserMsgContext.Provider value={showUIMessage}>
+            <Tabs />
+        </UserMsgContext.Provider>
+        <Footer />
+        <Message {...userMessage}/>
+        </>
+    );
 }
-
-export default App;
