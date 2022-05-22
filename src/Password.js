@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { setPasswordCollector } from './modules/crypto';
+import { setPasswordCollector } from './modules/passwordManager';
 import './styles/Password.css';
 
 export default function Password() {

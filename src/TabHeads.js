@@ -18,7 +18,7 @@ export default function TabHeads(props) {
     };
 
     const headList = props.labels.map((label, i) => {
-        return <a key={i} className={tabClasses[!i ? 0 : 1]} onClick={() => selectTab(i)}>{label}</a>;
+        return <a key={i} className={tabClasses[i]} onClick={() => selectTab(i)}>{label}</a>;
     });
 
     return <>{headList}</>;
