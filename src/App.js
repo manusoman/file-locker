@@ -22,8 +22,8 @@ export default function App() {
 
     return (
         <>
-        <Header />
         <UserMsgContext.Provider value={showUIMessage}>
+            <Header />
             <Tabs />
         </UserMsgContext.Provider>
         <Footer />

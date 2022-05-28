@@ -1,25 +1,32 @@
-import { useState } from 'react';
+import { useReducer } from 'react';
 
-export default function TabHeads(props) {
-    const classSelected = 'tabHead selected';
-    const classOther = 'tabHead';
+const classSelected = 'tabHead selected';
+const classOther = 'tabHead';
 
-    const getSelectionPattern = index => {
-        const a = Array(props.labels.length).fill(classOther);
-        a[index] = classSelected;
-        return a;
-    };
-    
-    const [tabClasses, set_tabClasses] = useState(getSelectionPattern(0));
+const getSelectionPattern = (count, index) => {
+    const a = Array(count).fill(classOther);
+    a[index] = classSelected;
+    return a;
+};
+
+export default function TabHeads(props) {  
+    const tabCount = props.labels.length;
+
+    // "useReducer" isn't required here.
+    // It was used as an experiment.
+    const [tabClasses, change_tabClasses] = useReducer(
+        (state, action) => getSelectionPattern(state.length, action),
+        getSelectionPattern(tabCount, 0)
+    );
 
     const selectTab = index => {
-        set_tabClasses(getSelectionPattern(index));
+        change_tabClasses(index);
         props.onChange(index);
     };
 
-    const headList = props.labels.map((label, i) => {
-        return <a key={i} className={tabClasses[i]} onClick={() => selectTab(i)}>{label}</a>;
-    });
+    const headList = props.labels.map(
+        (label, i) => <a key={i} className={tabClasses[i]} onClick={() => selectTab(i)}>{label}</a>
+    );
 
     return <>{headList}</>;
 }

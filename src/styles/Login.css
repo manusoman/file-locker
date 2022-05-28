@@ -1,13 +1,15 @@
-#pswd {
-    position: absolute;
+#login {
+    position: relative;
+}
+
+#email, #pswd {
     padding: 5px 10px;
     height: 100%;
-    right: 20px;
     color: white;
     background-color: transparent;
     cursor: pointer;
 }
 
-#pswd:focus {
+#email:focus, #pswd:focus {
     border-bottom: 1px solid white;
 }

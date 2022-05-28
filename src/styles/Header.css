@@ -1,9 +1,9 @@
 header {
-    padding: 16px;
-    text-align: center;    
+    padding: 16px 20px;
     background-color: #404040;
 }
 
-header > h2 {
+header > h2, header > form {
+    display: inline-block;
     color: white;
 }
