@@ -6,8 +6,20 @@ export default function Sign(props) {
     const [downloadLink, setDownloadLink] = useState('');
     const [fileName, setFileName] = useState('');
 
-    const onFileSelect = () => {};
-    const onAction = () => {};
+    const onFileSelect = e => {
+        if(e.target.files.length) {
+            setFiles(e.target.files);
+            setIsDisabled({});
+        } else setIsDisabled({disabled : true });
+    };
+
+    const onAction = () => {
+        // cryptoTask(files[0], getValidatedPswd(), prepareFileDownload)
+        // .catch(err => {
+        //     showUIMessage(err.message, true);
+        //     console.error(err);
+        // });
+    };
 
     return (
         <div className={props.className}>

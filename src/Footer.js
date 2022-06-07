@@ -1,4 +1,4 @@
-import { useEffect, useState, memo } from "react";
+import { memo, useEffect, useState } from "react";
 import './styles/Footer.css';
 
 function Footer() {

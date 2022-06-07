@@ -14,3 +14,22 @@ export default function Sign(props) {
         </div>
     );
 }
+
+function isPrime(n) {
+    if(n > Number.MAX_SAFE_INTEGER) return undefined;
+    if(n < 4) return [true, null];
+    if(n % 2 === 0) return [false, 2];
+
+    let denom = 3;
+    let max = n / denom;
+
+    while(denom <= max) {
+        if(n % denom === 0) return [false, denom];
+        max = n / denom;
+        denom += 2;
+    }
+
+    return [true, null];
+}
+
+// 3 5 7 9 11 13 15 17 19 21 23 25 27 29 ...

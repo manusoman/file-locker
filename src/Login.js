@@ -1,12 +1,13 @@
 import { useContext, useState } from 'react';
-import { generateKeys } from './modules/crypto';
+import { obtainKeys, obtainSignature } from './modules/crypto';
 import { UserMsgContext } from './App';
+import Key from './Key';
 import './styles/Login.css';
 
 export default function Login() {
     const showUIMessage = useContext(UserMsgContext);
 
-    const onSubmitHandler = e => {
+    const onSubmitHandler = async e => {
         e.preventDefault();
 
         const email = verifyEmail(e.target.email.value);
@@ -21,16 +22,20 @@ export default function Login() {
             return;
         }
 
-        generateKeys(email, password)
-        .catch(err => {
+        const key = e.target.keyInput.files[0];
+
+        try {
+            obtainKeys(email, password);
+            key && obtainSignature(await key.arrayBuffer());
+        } catch (err) {
             showUIMessage(err.message, true);
             console.error(err);
-        });
+        }
     };
 
     return (
         <form id="login" onSubmit={onSubmitHandler}>
-            <Email /><Password /><input type="submit" value="Login" />
+            <Email /><Password /><Key /><input type="submit" value="Login" />
         </form>
     );
 }

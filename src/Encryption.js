@@ -1,6 +1,5 @@
 import { useState, useContext } from 'react';
 import { UserMsgContext } from './App';
-import { getValidatedPswd } from './modules/passwordManager';
 import { createEncryptFileName, createDecryptFileName } from './modules/fileNameManager';
 import './styles/Encryption.css';
 
@@ -29,12 +28,12 @@ export default function Encryption(props) {
 
     const onAction = () => {
         // Start with encrypting only one file
-        cryptoTask(files[0], getValidatedPswd(), prepareFileDownload)
+        cryptoTask(files[0], prepareFileDownload)
         .catch(err => {
             showUIMessage(err.message, true);
             console.error(err);
         });
-    }
+    };
 
     return (
         <div className={props.className}>

@@ -1,0 +1,21 @@
+#gkOverlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    background-color: #000000d0;
+    z-index: 1;
+}
+
+#gkBox {
+    margin: 200px auto;
+    padding: 20px;
+    max-width: 400px;
+    text-align: center;
+    background-color: #404040;
+}
+
+#gkBox > button + button {
+    margin-left: 20px;
+}
