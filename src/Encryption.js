@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import FileInput from './FileInput';
 import { UserMsgContext } from './App';
 import { createEncryptFileName, createDecryptFileName } from './modules/fileNameManager';
 import './styles/Encryption.css';
@@ -26,20 +27,28 @@ export default function Encryption(props) {
         setDownloadLink(link);
     };
 
-    const onAction = () => {
+    const onAction = async () => {
         // Start with encrypting only one file
-        cryptoTask(files[0], prepareFileDownload)
-        .catch(err => {
-            showUIMessage(err.message, true);
+        const { name, type } = files[0];
+
+        try {
+            const result = await cryptoTask(files[0]);
+            prepareFileDownload(result, name, type);
+        } catch (err) {
+            showUIMessage(err.message, 'error');
             console.error(err);
-        });
+        }
     };
+
+    const submitForm = () => {};
 
     return (
         <div className={props.className}>
-            <input type="file" onChange={onFileSelect} multiple />
-            <input type="button" {...isDisabled} value={mode} onClick={onAction} />
-            <a className="linkButton" href={downloadLink} download={fileName} >Download</a>
+            <form onSubmit={submitForm}>
+                <FileInput label="Select File" onChange={onFileSelect} multiple={true} />
+                <input type="button" {...isDisabled} value={mode} onClick={onAction} />
+                <a className="off" href={downloadLink} download={fileName} ></a>
+            </form>
         </div>
     );
 }

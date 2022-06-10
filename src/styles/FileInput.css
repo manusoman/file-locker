@@ -1,0 +1,12 @@
+.fileInput {
+    display: block;
+    margin-bottom: 20px;
+    color: #c0c0c0;
+}
+
+.fileInput > label {
+    padding: 5px 10px;
+    font-weight: bold;
+    border: 1px solid black;
+    cursor: pointer;
+}

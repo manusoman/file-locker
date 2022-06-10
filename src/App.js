@@ -7,14 +7,14 @@ import Message from './Message';
 export const UserMsgContext = createContext();
 
 export default function App() {
-    const msgOffState = { className : 'off', mode : '', text : '' };
+    const msgOffState = { className : 'off', text : '', mode : 'normal' };
     const [userMessage, setUserMessage] = useState(msgOffState);
 
-    const showUIMessage = (msg, isError) => {
+    const showUIMessage = (msg, mode = 'normal') => {
         setUserMessage({
             className : '',
-            mode : isError ? 'error' : '',
-            text : msg
+            text : msg,
+            mode
         });
 
         setTimeout(() => setUserMessage(msgOffState), 3000);

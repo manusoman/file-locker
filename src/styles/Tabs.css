@@ -28,3 +28,18 @@ a {
 #tabContents {
     padding: 30px 20px;
 }
+
+input[type="button"], input[type="submit"] {
+    padding: 0px 20px;
+    height: 38px;
+    color: white;
+    background-color: #2d8d4a;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="button"][disabled], input[type="submit"][disabled] {
+    color: #ffffff60;
+    background-color: #ffffff20;
+    cursor: default;
+}

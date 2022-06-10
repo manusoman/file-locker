@@ -2,25 +2,12 @@ const getRandomValueArray = size => window.crypto.getRandomValues(new Uint8Array
 const subtleCrypto = window.crypto.subtle;
 const IVsize = 16;
 const saltSize = 16;
-
+const textEncoder = new TextEncoder();
 let BASE_KEY_PROMISE = null;
-let PUBLIC_KEY_PROMISE = null;
-let PRIVATE_KEY_PROMISE = null;
 
-export const obtainKeys = (email, pswd) => {
-    const keyData = new TextEncoder().encode(`${email}${pswd}`);
-    const baseKeyUsages = ['deriveBits', 'deriveKey'];
-    BASE_KEY_PROMISE = subtleCrypto.importKey('raw', keyData, 'PBKDF2', false, baseKeyUsages);
-};
-
-export const obtainSignature = async key => {
-    const [iv, salt, data] = detachIVandSalt(key);
-    const unwrapAlgo = { name : "AES-GCM", iv };
-    const unwrappedKeyAlgo = { name : 'ECDSA', namedCurve : 'P-256' };    
-    const unwrappingKey = await BASE_KEY_PROMISE.then(key => deriveKey(key, salt));
-
-    PRIVATE_KEY_PROMISE = subtleCrypto.unwrapKey('jwk', data, unwrappingKey, unwrapAlgo, unwrappedKeyAlgo, true, ['sign']);
-    PUBLIC_KEY_PROMISE = getPublicKey(await PRIVATE_KEY_PROMISE);
+export const obtainKeys = loginData => {
+    const keyData = textEncoder.encode(loginData);
+    BASE_KEY_PROMISE = subtleCrypto.importKey('raw', keyData, 'PBKDF2', false, ['deriveKey']);
 };
 
 export const generateKeyPair = async () => {
@@ -34,15 +21,18 @@ export const generateKeyPair = async () => {
         BASE_KEY_PROMISE.then(baseKey => deriveKey(baseKey, salt))
     ]);
 
-    const buff = await subtleCrypto.wrapKey('jwk', keyPair.privateKey, wrappingKey, wrapAlg);
-    return addIVandSalt(buff, iv, salt);
+    const [priv_key_wrapper, portable_pub_key] = await Promise.all([
+        subtleCrypto.wrapKey('jwk', keyPair.privateKey, wrappingKey, wrapAlg),
+        subtleCrypto.exportKey('raw', keyPair.publicKey)
+    ]);
+
+    return [addIVandSalt(priv_key_wrapper, iv, salt), portable_pub_key];
 };
 
 const crypto = {
-    encrypt : async (file, cb) => {
+    encrypt : async file => {
         throw_noCredentials_error();
-
-        const { name, type } = file;
+        
         const iv = getRandomValueArray(IVsize);
         const salt = getRandomValueArray(saltSize);
 
@@ -52,28 +42,40 @@ const crypto = {
         ]);
 
         const buff = await subtleCrypto.encrypt({ name : "AES-GCM", iv }, key, data);
-        cb(addIVandSalt(buff, iv, salt), name, type);
+        return addIVandSalt(buff, iv, salt);
     },
 
-    decrypt : async (file, cb) => {
+    decrypt : async file => {
         throw_noCredentials_error();
-
-        const { name, type } = file;
+        
         const buff = await file.arrayBuffer();
         const [iv, salt, data] = detachIVandSalt(buff);
         const key = await BASE_KEY_PROMISE.then(baseKey => deriveKey(baseKey, salt));
-        const result = await subtleCrypto.decrypt({ name : "AES-GCM", iv }, key, data);
-        cb(result, name, type);
+        return subtleCrypto.decrypt({ name : "AES-GCM", iv }, key, data);
     },
 
-    sign : async (file) => {
-        // const baseKey = await getBaseKey(pswd);
-        // const data = await file.arrayBuffer();
-        // const keyPair = await generateKeyPair(baseKey);
-        // subtleCrypto.sign(algorithm, key, data);
+    sign : async (privKeyFile, file) => {
+        throw_noCredentials_error();
+        const [privKey, data] = await Promise.all([
+            privKeyFile.arrayBuffer().then(obtainSignature),
+            file.arrayBuffer()
+        ]);
+
+        return subtleCrypto.sign({ name : 'ECDSA', hash : 'SHA-256' }, privKey, data);
     },
 
-    verify : async (file, signature) => {}
+    verify : async (signatureBuff, pubKeyBuff, fileBuff) => {
+        throw_noCredentials_error();
+
+        const [signature, pubKey, data] = await Promise.all([
+            signatureBuff.arrayBuffer(), pubKeyBuff.arrayBuffer(), fileBuff.arrayBuffer()
+        ]);
+
+        const keyAlg = { name : 'ECDSA', namedCurve : 'P-256' };
+        const pubKeyImport = await subtleCrypto.importKey('raw', pubKey, keyAlg, true, ['verify']);
+
+        return subtleCrypto.verify({ name : 'ECDSA', hash : 'SHA-256' }, pubKeyImport, signature, data);
+    }
 };
 
 function throw_noCredentials_error() {
@@ -82,17 +84,25 @@ function throw_noCredentials_error() {
     }
 }
 
-async function getPublicKey(priv_key) {
-    const temp = await subtleCrypto.exportKey('jwk', priv_key);
-    delete temp.d;
-    temp.key_ops = ['verify'];
-    return subtleCrypto.importKey('jwk', temp, { name : 'ECDSA', namedCurve: 'P-256' }, true, ['verify']);
-}
+async function obtainSignature(key) {
+    const [iv, salt, data] = detachIVandSalt(key);
+    const unwrapAlgo = { name : "AES-GCM", iv };
+    const unwrappedKeyAlgo = { name : 'ECDSA', namedCurve : 'P-256' };    
+    const unwrappingKey = await BASE_KEY_PROMISE.then(key => deriveKey(key, salt));
+    return subtleCrypto.unwrapKey('jwk', data, unwrappingKey, unwrapAlgo, unwrappedKeyAlgo, true, ['sign']);
+};
+
+// This funciton might be needed for future features
+// function getPublicKey(priv_key) {
+//     const temp = await subtleCrypto.exportKey('jwk', priv_key);
+//     delete temp.d;
+//     temp.key_ops = ['verify'];
+//     return subtleCrypto.importKey('jwk', temp, { name : 'ECDSA', namedCurve: 'P-256' }, true, ['verify']);
+// }
 
 function deriveKey(baseKey, salt) {
     const derivedKeyAlgorithm = { name : 'AES-GCM', length : 256 };
     const keyUsages = ['encrypt', 'decrypt', 'wrapKey', 'unwrapKey'];
-    // const keyUsages = ['wrapKey', 'unwrapKey'];
     const algorithm = {
         name : 'PBKDF2',
         hash : 'SHA-256',
@@ -120,7 +130,7 @@ function detachIVandSalt(buff) {
         buff.subarray(0, IVsize),
         buff.subarray(IVsize, IVsize + saltSize),
         buff.subarray(IVsize + saltSize)
-    ]; // This returns [iv, salt, data]
+    ]; // Returns [iv, salt, data]
 }
 
 

@@ -1,14 +1,1 @@
-input[type="button"], .linkButton {
-    padding: 0px 20px;
-    height: 38px;
-    color: white;
-    background-color: #606060;
-    border-radius: 5px;
-    cursor: pointer;
-}
 
-.linkButton {
-    display: inline-block;
-    margin-left: 20px;
-    line-height: 38px;
-}

@@ -16,3 +16,8 @@
     color: white;
     background-color: #c83333;    
 }
+
+#messageBox.success {
+    color: white;
+    background-color: #2d8d4a;    
+}

@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react';
-import { obtainKeys, obtainSignature } from './modules/crypto';
 import { UserMsgContext } from './App';
-import Key from './Key';
+import { obtainKeys } from './modules/crypto';
 import './styles/Login.css';
 
 export default function Login() {
@@ -17,25 +16,21 @@ export default function Login() {
             const errTxt = (!email && !password) ? 'Invalid email & password' :
                             `Invalid ${!email ? 'email' : 'password'}`;
 
-            showUIMessage(errTxt, true);
+            showUIMessage(errTxt, 'error');
             console.error(errTxt);
             return;
         }
-
-        const key = e.target.keyInput.files[0];
-
-        try {
-            obtainKeys(email, password);
-            key && obtainSignature(await key.arrayBuffer());
-        } catch (err) {
-            showUIMessage(err.message, true);
+        
+        try { obtainKeys(`${email}${password}`); }
+        catch(err) {
+            showUIMessage(err.message, 'error');
             console.error(err);
         }
     };
 
     return (
         <form id="login" onSubmit={onSubmitHandler}>
-            <Email /><Password /><Key /><input type="submit" value="Login" />
+            <Email /><Password /><input type="submit" value="Login" />
         </form>
     );
 }
