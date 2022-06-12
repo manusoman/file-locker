@@ -1,16 +1,12 @@
-#gkBox {
-    margin: 100px auto;
+#appInfoBox {
     padding: 20px;
+    margin: 100px auto;
     width: 90%;
     max-width: 600px;
     color: #a0a0a0;
     background-color: #1e1e1e;
 }
 
-#gkBox > * + * {
+#appInfoBox > * + * {
     margin-top: 20px;
-}
-
-#gkBox > div > input + input {
-    margin-left: 10px;
 }

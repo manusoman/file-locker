@@ -4,7 +4,7 @@ import { obtainKeys } from './modules/crypto';
 import './styles/Login.css';
 
 export default function Login() {
-    const showUIMessage = useContext(UserMsgContext);
+    const { showUIMessage } = useContext(UserMsgContext);
 
     const onSubmitHandler = async e => {
         e.preventDefault();

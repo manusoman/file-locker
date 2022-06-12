@@ -24,7 +24,7 @@ export default function FileInput(props) {
     return (
         <div className='fileInput'>
             <label>
-                {props.label}
+                {props.children}
                 <input ref={fileInput} className='off' type="file" onChange={onChangeHandler} {...multiple} />
             </label>
             <SelectedInput className={visibility} onClick={clearFileSelection} fileName={fileName} />

@@ -1,9 +1,12 @@
 import { useContext, useState } from 'react';
 import { UserMsgContext } from './App';
 import FileInput from './FileInput';
+import Instructions from './Instructions';
+
+const verifyInstructions = ``;
 
 export default function Sign(props) {
-    const showUIMessage = useContext(UserMsgContext);
+    const { showUIMessage } = useContext(UserMsgContext);
     const [signature, setSignature] = useState(null);
     const [pubkey, setPubkey] = useState(null);
     const [doc, setDoc] = useState(null);
@@ -50,11 +53,12 @@ export default function Sign(props) {
     return (
         <div className={props.className}>
             <form onSubmit={submitForm}>
-                <FileInput label='Select Signature' onChange={files => onFileSelect('signature', files[0])} />
-                <FileInput label='Select Public Key' onChange={files => onFileSelect('pubkey', files[0])} />
-                <FileInput label='Select File' onChange={files => onFileSelect('file', files[0])} />
+                <FileInput onChange={files => onFileSelect('signature', files[0])}>Select Signature</FileInput>
+                <FileInput onChange={files => onFileSelect('pubkey', files[0])}>Select Public Key</FileInput>
+                <FileInput onChange={files => onFileSelect('file', files[0])}>Select File</FileInput>
                 <input type="submit" {...isDisabled} value="Verify Signature" />
             </form>
+            <Instructions>{verifyInstructions}</Instructions>
         </div>
     );
 }

@@ -1,0 +1,9 @@
+.instructions {
+    margin-top: 50px;
+    max-width: 600px;
+    color: #a0a0a0;
+}
+
+.instructions > * + * {
+    margin-top: 10px;
+}
