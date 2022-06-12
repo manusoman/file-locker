@@ -5,7 +5,7 @@ import './styles/Header.css';
 function Header() {
     return (
         <header>
-            <h2>File Locker</h2>
+            <img id="logo" src="file_locker_logo.svg" alt="File Locker Logo" />
             <Login />
         </header>
     );

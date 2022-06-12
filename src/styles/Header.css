@@ -1,9 +1,32 @@
 header {
-    padding: 16px 20px;
-    background-color: #404040;
+    padding: 16px 20px 20px 20px;
+    background-color: #1e1e1e;
 }
 
-header > h2, header > form {
+header > * {
     display: inline-block;
+    vertical-align: middle;
+}
+
+#logo {
+    height: 34px;
+}
+
+#login {
+    margin-left: 20px;
+    padding-left: 20px;
     color: white;
+    border-left: 2px solid #ffffff40;
+}
+
+@media (max-width: 700px) {
+    header > * {
+        display: block;
+    }
+
+    #login {
+        margin-left: 0px;
+        padding-left: 0px;
+        border-left: none;
+    }
 }

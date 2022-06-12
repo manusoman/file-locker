@@ -15,23 +15,23 @@ export default function Sign(props) {
         switch(type) {
             case 'signature':
                 setSignature(file);
-                enable = pubkey && doc;
+                enable = file && pubkey && doc;
                 break;
 
             case 'pubkey':
                 setPubkey(file);
-                enable = signature && doc;
+                enable = file && signature && doc;
                 break;
 
             case 'file':
                 setDoc(file);
-                enable = signature && pubkey;
+                enable = file && signature && pubkey;
                 break;
 
             default:
         }
         
-        enable ? setIsDisabled({}) : setIsDisabled({ disabled : true });
+        setIsDisabled(enable ? {} : { disabled : true });
     };
 
     const submitForm = async e => {
@@ -50,9 +50,9 @@ export default function Sign(props) {
     return (
         <div className={props.className}>
             <form onSubmit={submitForm}>
-                <FileInput label='Select Signature' onChange={e => onFileSelect('signature', e.target.files[0])} />
-                <FileInput label='Select Public Key' onChange={e => onFileSelect('pubkey', e.target.files[0])} />
-                <FileInput label='Select File' onChange={e => onFileSelect('file', e.target.files[0])} />
+                <FileInput label='Select Signature' onChange={files => onFileSelect('signature', files[0])} />
+                <FileInput label='Select Public Key' onChange={files => onFileSelect('pubkey', files[0])} />
+                <FileInput label='Select File' onChange={files => onFileSelect('file', files[0])} />
                 <input type="submit" {...isDisabled} value="Verify Signature" />
             </form>
         </div>

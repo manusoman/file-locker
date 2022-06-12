@@ -8,7 +8,7 @@ const SNregExp = /^(.*)\.\w*$/i; // Signature Name reg exp
 export default function Sign(props) {
     const [signature, setSignature] = useState(null);
     const [userFile, setFile] = useState(null);
-    const [isDisabled, setIsDisabled] = useState({disabled : true });
+    const [isDisabled, setIsDisabled] = useState({ disabled : true });
     const [gkVisibility, setGKVisibility] = useState('off');
     const showUIMessage = useContext(UserMsgContext);
     const downloader = useRef();
@@ -21,13 +21,17 @@ export default function Sign(props) {
     };
 
     const addFile = (file, isSignature) => {
+        let enable = false;
+
         if(isSignature) {
             setSignature(file);
-            userFile && setIsDisabled({});
+            enable = file && userFile;
         } else {            
             setFile(file);
-            signature && setIsDisabled({});
+            enable = file && signature;
         }
+
+        setIsDisabled(enable ? {} : { disabled : true });
     };
 
     const submitForm = e => {
@@ -50,9 +54,9 @@ export default function Sign(props) {
     return (
         <div className={props.className}>
             <form onSubmit={submitForm}>
-                <FileInput label="Select Private Key" onChange={e => addFile(e.target.files[0], true)} />
+                <FileInput label="Select Private Key" onChange={files => addFile(files[0], true)} />
                 <p style={style}>Don't have a key? <a onClick={() => setGKVisibility('')}>Create one</a></p>
-                <FileInput label='Select File' onChange={e => addFile(e.target.files[0])} />
+                <FileInput label='Select File' onChange={files => addFile(files[0])} />
                 <input type="submit" {...isDisabled} value="Sign File" />
                 <a ref={downloader} className="off"></a>
             </form>            

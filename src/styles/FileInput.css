@@ -8,5 +8,28 @@
     padding: 5px 10px;
     font-weight: bold;
     border: 1px solid black;
+    background-color: #303030;
+    cursor: pointer;
+}
+
+.selectedFile {
+    margin-left: 20px;
+}
+
+.selectedFile > * {
+    vertical-align: top;
+}
+
+.selectedFile > span {
+    height: 20px;
+}
+
+.selectedFile > button {
+    margin-left: 10px;
+    background: transparent;
+}
+
+.selectedFile > button > img {
+    height: 20px;
     cursor: pointer;
 }

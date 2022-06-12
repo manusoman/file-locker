@@ -30,24 +30,18 @@ export default function Login() {
 
     return (
         <form id="login" onSubmit={onSubmitHandler}>
-            <Email /><Password /><input type="submit" value="Login" />
+            <LoginField name="email" id="email" type="text" placeholder="Enter email" />
+            <LoginField name="password" id="pswd" type="password" placeholder="Enter password" />
+            <input id="loginButton" type="submit" value="Login" />
         </form>
     );
 }
 
 
-function Email() {
-    const [email, setPswd] = useState('');
-    const onEmailChange = e => setPswd(e.target.value);
-
-    return <input name="email" id="email" type="text" onChange={onEmailChange} value={email} placeholder="Enter email" />;
-}
-
-function Password() {
-    const [pswd, setPswd] = useState('');
-    const onPswdChange = e => setPswd(e.target.value);
-
-    return <input name="password" id="pswd" type="password" onChange={onPswdChange} value={pswd} placeholder="Enter password" />;
+function LoginField(props) {
+    const [value, setValue] = useState('');
+    const onValueChange = e => setValue(e.target.value);
+    return <input {...props} onChange={onValueChange} value={value} />;
 }
 
 
