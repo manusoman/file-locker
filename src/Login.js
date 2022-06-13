@@ -24,7 +24,7 @@ export default function Login() {
         try { obtainKeys(`${email}${password}`); }
         catch(err) {
             showUIMessage(err.message, 'error');
-            console.error(err);
+            console.error(err.message);
         }
     };
 

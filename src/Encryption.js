@@ -5,8 +5,8 @@ import FileInput from './FileInput';
 import Instructions from './Instructions';
 import './styles/Encryption.css';
 
-const encInstructions = `Encrypt is used to encrypt the selected file with your login crendentials. Once the file is encrypted, no one can read it including yourself. In order to read it again, you must decrypt it with the same login credentials you used to encrypt it. Because of this, if you ever lose your login credentials, you won't be able to decrypt and use the encrypted files. So, memorize your login credentials well, or keep it at a safe location.`;
-const decInstructions = ``;
+const encInstructions = `Encrypt is used to encrypt the selected file with your login crendentials. It doesn't change the original file, but create a new encrypted one. Currently this app can't retrieve or change your password once it's lost. So, don't lose it.`;
+const decInstructions = `Decrypt is used to decrypt the selected cryptic file with your login crendentials. Please note that, in order for this to work, you must use the same login credentials you used while encrypting the file.`;
 
 export default function Encryption(props) {
     const { mode, cryptoTask } = props;

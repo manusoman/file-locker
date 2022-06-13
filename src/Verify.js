@@ -3,7 +3,7 @@ import { UserMsgContext } from './App';
 import FileInput from './FileInput';
 import Instructions from './Instructions';
 
-const verifyInstructions = ``;
+const verifyInstructions = `If you have someone's public key and they send you a digitally signed file with their signature along with it, use this section to verify the validity of the signature.`;
 
 export default function Sign(props) {
     const { showUIMessage } = useContext(UserMsgContext);
@@ -46,7 +46,7 @@ export default function Sign(props) {
             } else throw new Error('Invalid signature!');
         } catch(err) {
             showUIMessage(err.message, 'error');
-            console.error(err);
+            console.error(err.message);
         }
     };
 
