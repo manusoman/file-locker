@@ -5,9 +5,10 @@ const saltSize = 16;
 const textEncoder = new TextEncoder();
 let BASE_KEY_PROMISE = null;
 
-export const obtainKeys = loginData => {
+export const obtainKeys = async loginData => {
     const keyData = textEncoder.encode(loginData);
     BASE_KEY_PROMISE = subtleCrypto.importKey('raw', keyData, 'PBKDF2', false, ['deriveKey']);
+    await BASE_KEY_PROMISE;
 };
 
 export const generateKeyPair = async () => {

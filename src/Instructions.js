@@ -14,7 +14,7 @@ export default function Instructions(props) {
         <div className="instructions">
         <h3>Instructions</h3>
         <p>{props.children}</p>
-        <p>Also, please check out the <a onClick={clickHandler}>app info</a>.</p>
+        <p>Also, please check out the <a className='linkType' onClick={clickHandler}>app info</a>.</p>
         </div>
     );
 }

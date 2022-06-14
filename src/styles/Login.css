@@ -1,14 +1,47 @@
 #email, #pswd {
     margin-right: 10px;
-    padding: 5px 10px;
+}
+
+#email, #pswd, #loginButton {
+    vertical-align: middle;
+}
+
+#pswd, #pswd > span, #pswd > span > * {
+    display: inline-block;
+}
+
+#pswd > span {
+    position: relative;
+}
+
+#email, #pswd input {
+    padding: 5px 30px 5px 10px;
     height: 38px;
     color: white;
     background-color: black;
     cursor: pointer;
 }
 
-#email:focus, #pswd:focus {
+#pswd button {
+    position: absolute;
+    width: 30px;
+    height: 38px;
+    right: 0px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+#email:focus, #pswd input:focus {
     border-bottom: 1px solid white;
+}
+
+#pswdReqs {
+    position: absolute;
+    margin: 2px 20px 0px 0px;
+    padding: 10px;
+    color: black;
+    background-color: #d8df94;
+    z-index: 1;
 }
 
 @media (max-width: 700px) {

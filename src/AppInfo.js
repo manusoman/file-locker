@@ -9,6 +9,7 @@ export default function AppInfo(props) {
                 <h2>App Info</h2>
                 <p>{appInfo1}</p>
                 <p><strong>Warning:</strong> {appInfo2}</p>
+                <p>Find me on <a className='linkType' href='https://twitter.com/manu_221b'>Twitter</a></p>
                 <input type="button" onClick={props.onClose} value="Close" />
             </div>
         </div>

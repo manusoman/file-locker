@@ -4,7 +4,7 @@ import FileInput from './FileInput';
 import GenerateKey from './GenerateKey';
 import Instructions from './Instructions';
 
-const SNregExp = /^(.*)\.\w*$/i; // Signature Name reg exp
+const SNregExp = /^(.*)\.\w*$/; // Signature Name reg exp
 const signInstructions = `Use your private key to sign the selected document. If you dont' have a digital signature, create one using the given directive above.`;
 
 export default function Sign(props) {

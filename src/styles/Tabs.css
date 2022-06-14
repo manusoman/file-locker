@@ -1,16 +1,3 @@
-a {
-    color: #57da6c;
-    cursor: pointer;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-a.tabHead {
-    text-decoration: none;
-}
-
 #tabHeads {
     position: relative;
     height: 40px;

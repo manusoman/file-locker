@@ -10,6 +10,8 @@ export const UserMsgContext = createContext();
 export default function App() {
     const msgOffState = { className : 'off', text : '', mode : 'normal' };
     const [userMessage, setUserMessage] = useState(msgOffState);
+    const [defaultClass, setDefaultClass] = useState('');
+    const [tabClass, setTabClass] = useState('off');
     const [appInfoClass, setAppInfoClass] = useState('');
 
     const showUIMessage = (msg, mode = 'normal') => {
@@ -22,17 +24,32 @@ export default function App() {
         setTimeout(() => setUserMessage(msgOffState), 3000);
     };
 
+    const showAppActions = flag => {
+        if(flag) {
+            setDefaultClass('off');
+            setTabClass('');
+        } else {
+            setTabClass('off');
+            setDefaultClass('');
+        }
+    };
+
     const showAppInfo = () => setAppInfoClass('');
 
     return (
         <>        
-        <UserMsgContext.Provider value={{showUIMessage, showAppInfo}}>
+        <UserMsgContext.Provider value={{showUIMessage, showAppActions, showAppInfo}}>
             <Header />
-            <Tabs />
+            <DefaultBG className={defaultClass} />
+            <Tabs className={tabClass} />
         </UserMsgContext.Provider>
         <Footer />
         <Message {...userMessage}/>
         <AppInfo className={appInfoClass} onClose={() => setAppInfoClass('off')} />
         </>
     );
+}
+
+function DefaultBG(props) {
+    return <div id="defaultBG" className={props.className}>Log in to continue</div>;
 }

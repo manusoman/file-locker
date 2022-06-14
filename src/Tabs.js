@@ -13,12 +13,12 @@ const getTabContntClasses = index => {
     return a;
 };
 
-export default function Tabs() {
+export default function Tabs(props) {
     const [tabContntClasses, setTabContntClasses] = useState(getTabContntClasses(0));
     const changeTab = index => setTabContntClasses(getTabContntClasses(index));
 
     return (
-        <div id="tabs">
+        <div id="tabs" className={props.className}>
             <div id="tabHeads">
                 <TabHeads onChange={changeTab} labels={tabLabels} />
             </div>
