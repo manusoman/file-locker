@@ -57,7 +57,7 @@ export default function Sign(props) {
         <div className={props.className}>
             <form onSubmit={submitForm}>
                 <FileInput onChange={files => addFile(files[0], true)}>Select Private Key</FileInput>
-                <p style={style}>Don't have a digital signature? <a onClick={() => setGKVisibility('')}>Create one</a></p>
+                <p style={style}>Don't have a digital signature? <a className="linkType" onClick={() => setGKVisibility('')}>Create one</a>.</p>
                 <FileInput onChange={files => addFile(files[0])}>Select File</FileInput>
                 <input type="submit" {...isDisabled} value="Sign File" />
                 <a ref={downloader} className="off"></a>

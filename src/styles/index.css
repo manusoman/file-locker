@@ -52,12 +52,8 @@ a.linkType:hover {
 }
 
 #defaultBG {
-  margin: 100px;
-  padding: 20px;
+  margin: 20px;
   font-size: 22px;
   font-weight: bold;
-  border-radius: 10px;
-  text-align: center;
   color: #303030;
-  border: 5px solid #0a0a0a;
 }

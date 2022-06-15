@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useRef } from 'react';
 import { UserMsgContext } from './App';
 import { createEncryptFileName, createDecryptFileName } from './modules/fileNameManager';
 import FileInput from './FileInput';
@@ -14,8 +14,7 @@ export default function Encryption(props) {
     const { showUIMessage } = useContext(UserMsgContext);
     const [files, setFiles] = useState([]);
     const [isDisabled, setIsDisabled] = useState({disabled : true });
-    const [fileName, setFileName] = useState('');
-    const [downloadLink, setDownloadLink] = useState('');
+    const downloader = useRef();
 
     const onFileSelect = files => {
         if(files.length) {
@@ -26,9 +25,10 @@ export default function Encryption(props) {
 
     const prepareFileDownload = (result, sourceName, fileType) => {
         const link = URL.createObjectURL(new Blob([result], { type : fileType }));
-        URL.revokeObjectURL(downloadLink);
-        setFileName(fileNamer(sourceName));
-        setDownloadLink(link);
+        URL.revokeObjectURL(downloader.current.href);
+        downloader.current.href = link;
+        downloader.current.download = fileNamer(sourceName);
+        downloader.current.click();
     };
 
     const submitForm = async e => {
@@ -49,7 +49,7 @@ export default function Encryption(props) {
             <form onSubmit={submitForm}>
                 <FileInput onChange={onFileSelect}>Select File</FileInput>
                 <input type="submit" {...isDisabled} value={mode} />
-                <a className="off" href={downloadLink} download={fileName} ></a>
+                <a ref={downloader} className="off" ></a>
             </form>
             <Instructions>{mode === 'Encrypt' ? encInstructions : decInstructions}</Instructions>
         </div>

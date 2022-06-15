@@ -14,11 +14,18 @@
     position: relative;
 }
 
-#email, #pswd input {
+#email {
+    padding: 5px 10px;
+}
+
+#pswd input {
     padding: 5px 30px 5px 10px;
+}
+
+#email, #pswd input {
     height: 38px;
     color: white;
-    background-color: black;
+    background-color: #141414;
     cursor: pointer;
 }
 
