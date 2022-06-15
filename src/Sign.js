@@ -3,9 +3,9 @@ import { UserMsgContext } from './App';
 import FileInput from './FileInput';
 import GenerateKey from './GenerateKey';
 import Instructions from './Instructions';
+import { signInstructions } from './modules/texts';
 
 const SNregExp = /^(.*)\.\w*$/; // Signature Name reg exp
-const signInstructions = `Use your private key to sign the selected document. If you dont' have a digital signature, create one using the given directive above.`;
 
 export default function Sign(props) {
     const [signature, setSignature] = useState(null);

@@ -13,7 +13,7 @@ function Footer() {
 
     return (
         <footer>
-            <span>© {year}, Manu Soman<span>•</span>Find this project on <a href="#" className="linkType">GitHub</a></span>
+            <span>© {year}, Manu Soman<span>•</span>Find this project on <a href="https://github.com/manusoman/file-locker" className="linkType">GitHub</a></span>
         </footer>
     );
 }

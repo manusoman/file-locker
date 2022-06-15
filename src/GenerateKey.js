@@ -1,10 +1,10 @@
 import { useRef, useContext } from 'react';
 import { UserMsgContext } from './App';
 import { generateKeyPair } from './modules/crypto';
+import { genKeyInstructions } from './modules/texts';
 import './styles/GenerateKey.css';
 
 const zipper = new window.JSZip();
-const genKeyInstructions = `Clicking the 'Create Digital Signature' button below will produce a zip file containing both the private and public keys.`;
 
 export default function GenerateKey(props) {
     const { showUIMessage } = useContext(UserMsgContext);

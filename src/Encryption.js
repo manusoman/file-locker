@@ -3,10 +3,8 @@ import { UserMsgContext } from './App';
 import { createEncryptFileName, createDecryptFileName } from './modules/fileNameManager';
 import FileInput from './FileInput';
 import Instructions from './Instructions';
+import { encInstructions, decInstructions } from './modules/texts';
 import './styles/Encryption.css';
-
-const encInstructions = `Encrypt is used to encrypt the selected file with your login crendentials. It doesn't change the original file, but create a new encrypted one. Currently this app can't retrieve or change your password once it's lost. So, don't lose it.`;
-const decInstructions = `Decrypt is used to decrypt the selected cryptic file with your login crendentials. Please note that, in order for this to work, you must use the same login credentials you used while encrypting the file.`;
 
 export default function Encryption(props) {
     const { mode, cryptoTask } = props;

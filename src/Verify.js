@@ -2,8 +2,7 @@ import { useContext, useState } from 'react';
 import { UserMsgContext } from './App';
 import FileInput from './FileInput';
 import Instructions from './Instructions';
-
-const verifyInstructions = `If you have someone's public key and they send you a digitally signed file with their signature along with it, use this section to verify the validity of the signature.`;
+import { verifyInstructions } from './modules/texts';
 
 export default function Sign(props) {
     const { showUIMessage } = useContext(UserMsgContext);
